@@ -68,11 +68,11 @@ export function ServicesHero() {
             />
             <div className="relative flex flex-col gap-6">
               <Image
-                src="/brand/logo.png"
+                src="/brand/LOGO 333.png"
                 alt=""
-                width={64}
-                height={64}
-                className="h-16 w-16 object-contain"
+                width={2138}
+                height={1658}
+                className="h-20 w-auto self-start object-contain"
               />
               <p className="font-display text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
                 Founder-led audits and advisory for organisations that need

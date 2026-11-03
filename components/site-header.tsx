@@ -44,14 +44,16 @@ export function SiteHeader() {
           href="/"
           className="flex min-w-0 items-center gap-3 text-on-primary no-underline"
         >
-          <Image
-            src="/brand/logo.png"
-            alt=""
-            width={40}
-            height={40}
-            className="h-10 w-10 object-contain"
-            priority
-          />
+          <span className="relative inline-block h-10 w-[2.78rem] shrink-0 overflow-hidden">
+            <Image
+              src="/brand/LOGO 333.png"
+              alt=""
+              width={2138}
+              height={1658}
+              className="h-[118.68%] w-[137.76%] max-w-none -translate-x-[14.78%] object-contain"
+              priority
+            />
+          </span>
           <span className="font-display truncate text-lg font-semibold tracking-tight sm:text-xl">
             {siteConfig.name}
           </span>

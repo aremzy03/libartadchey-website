@@ -44,7 +44,7 @@ Founder-led root-cause consultancy: every engagement is handled personally by a 
 
 ## Brand Commitments
 
-- **Name:** Libertad Chey. Logo: purple shield with gold "LC" and wordmark (`public/brand/logo.png`).
+- **Name:** Libertad Chey. Logo: royal purple "LC" monogram with upward trajectory motif and wordmark (`public/brand/LOGO 111.png` main purple, `LOGO 222.png` wireframe, `LOGO 333.png` warm gold, `LOGO 444.png` charcoal, `public/brand/logo.png`).
 - **Founder:** Uchechukwu (Uche) Maduka; credentials include ACA, CIA, ISO 31000 (ISO 9001:2015 also appears in profile materials). Headshot provided for About/profile use (`public/brand/uche-maduka.jpg`).
 - **Voice:** Warm, personal, approachable, credible, authoritative. Conversational and direct without Big 4 stiffness. Human enough that visitors feel they will work with a real person who cares about outcomes.
 - **Emotional goals:** secured trust, sophisticated intelligence, approachable exclusivity.

@@ -11,13 +11,15 @@ export function SiteFooter() {
       <Container>
         <div className="mb-8 grid grid-cols-1 gap-8 border-b border-outline-variant pb-8 md:grid-cols-4 md:gap-8">
           <div className="md:col-span-1">
-            <Image
-              src="/brand/logo.png"
-              alt=""
-              width={48}
-              height={48}
-              className="mb-4 h-12 w-12 object-contain"
-            />
+            <Link href="/" className="mb-4 inline-block">
+              <Image
+                src="/brand/LOGO 111.png"
+                alt={siteConfig.name}
+                width={2138}
+                height={1658}
+                className="h-16 w-auto object-contain"
+              />
+            </Link>
             <p className="font-sans text-base leading-relaxed text-on-surface-variant">
               Risk and audit consultancy. Founder-led expertise for
               organisations that want gaps found before they reach the

@@ -11,73 +11,22 @@ const focusRing =
 export function HomeHero() {
   return (
     <section className="relative flex min-h-[min(92svh,54rem)] flex-col overflow-hidden bg-surface">
-      {/* Background Radial & Geometric Motifs */}
+      {/* Background Radial & Architectural Wireframe Brand Motif */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_65%_55%_at_92%_8%,color-mix(in_oklab,var(--primary)_16%,transparent),transparent_58%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_-5%_95%,color-mix(in_oklab,var(--secondary-container)_38%,transparent),transparent_52%)]" />
-        
-        {/* Geometric Shield Motif Background Accent - Semi-Transparent Royal Purple (Overdrive, Bolder & Animated) */}
-        <svg
-          className="home-shield-animated absolute -top-[18%] -right-[34%] hidden h-[170%] w-[82%] lg:block pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:opacity-40"
-          viewBox="0 0 500 600"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <defs>
-            <linearGradient id="purpleShieldGradient" x1="250" y1="50" x2="250" y2="520" gradientUnits="userSpaceOnUse">
-              <stop stopColor="var(--primary)" stopOpacity="0.28" />
-              <stop offset="0.6" stopColor="var(--primary-container)" stopOpacity="0.16" />
-              <stop offset="1" stopColor="var(--brand-gold)" stopOpacity="0.08" />
-            </linearGradient>
-            <radialGradient id="purpleShieldGlow" cx="250" cy="285" r="250" gradientUnits="userSpaceOnUse">
-              <stop stopColor="var(--primary)" stopOpacity="0.35" />
-              <stop offset="0.7" stopColor="var(--primary-container)" stopOpacity="0.1" />
-              <stop offset="1" stopColor="var(--primary)" stopOpacity="0" />
-            </radialGradient>
-          </defs>
 
-          {/* Soft Radial Ambient Glow */}
-          <circle cx="250" cy="285" r="250" fill="url(#purpleShieldGlow)" />
-
-          {/* Outer Semi-Transparent Filled Purple Shield Shape */}
-          <path
-            d="M250 50 L420 120 V280 C420 400 250 520 250 520 C250 520 80 400 80 280 V120 L250 50 Z"
-            fill="url(#purpleShieldGradient)"
-            stroke="var(--primary)"
-            strokeWidth="4.5"
-            strokeLinejoin="round"
-            strokeOpacity="0.45"
+        {/* Official Wireframe Brand Mark (LOGO 222) — Ambient Glow & Floating Motion */}
+        <div className="home-shield-animated pointer-events-none absolute -right-[12%] top-[4%] hidden w-[58%] max-w-[48rem] select-none lg:block">
+          <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_18%,transparent)_0%,color-mix(in_oklab,var(--brand-gold)_8%,transparent)_55%,transparent_75%)] blur-2xl" />
+          <Image
+            src="/brand/LOGO 222.png"
+            alt=""
+            width={2138}
+            height={1659}
+            className="relative h-auto w-full object-contain opacity-65 [filter:drop-shadow(0_0_1px_var(--primary))_drop-shadow(0_0_18px_color-mix(in_oklab,var(--primary)_22%,transparent))]"
           />
-
-          {/* Inner Concentric Shield Line with Gold Accent */}
-          <path
-            d="M250 78 L395 138 V275 C395 378 250 482 250 482 C250 482 105 378 105 275 V138 L250 78 Z"
-            stroke="var(--brand-gold)"
-            strokeWidth="2.5"
-            strokeOpacity="0.6"
-            strokeDasharray="8 8"
-          />
-
-          {/* Radial Geometry & Crosshairs */}
-          <circle cx="250" cy="285" r="140" stroke="var(--primary)" strokeWidth="2.25" strokeOpacity="0.4" />
-          <circle cx="250" cy="285" r="90" stroke="var(--primary-container)" strokeWidth="1.75" strokeDasharray="5 5" strokeOpacity="0.45" />
-          <path d="M250 145 V425 M110 285 H390" stroke="var(--primary)" strokeWidth="2" strokeDasharray="4 4" strokeOpacity="0.35" />
-          
-          {/* Subtle LC Monogram Watermark */}
-          <text
-            x="250"
-            y="302"
-            textAnchor="middle"
-            fontFamily="var(--font-playfair), Georgia, serif"
-            fontSize="58"
-            fontWeight="bold"
-            fill="var(--primary)"
-            fillOpacity="0.28"
-            letterSpacing="3"
-          >
-            LC
-          </text>
-        </svg>
+        </div>
       </div>
 
       <Container className="relative z-10 flex flex-1 flex-col justify-center py-12 sm:py-14 lg:py-16">
@@ -85,14 +34,16 @@ export function HomeHero() {
           {/* Left Hero Story */}
           <div className="relative flex flex-col gap-5 lg:col-span-7 lg:gap-6">
             <div className="home-rise home-delay-1 flex items-center gap-3.5 sm:gap-4">
-              <Image
-                src="/brand/logo.png"
-                alt=""
-                width={80}
-                height={80}
-                className="h-14 w-14 object-contain sm:h-[4.5rem] sm:w-[4.5rem]"
-                priority
-              />
+              <span className="relative inline-block h-14 w-[3.89rem] shrink-0 overflow-hidden sm:h-[4.5rem] sm:w-[5rem]">
+                <Image
+                  src="/brand/LOGO 111.png"
+                  alt=""
+                  width={2138}
+                  height={1658}
+                  className="h-[118.68%] w-[137.76%] max-w-none -translate-x-[14.78%] object-contain"
+                  priority
+                />
+              </span>
               <p className="font-display text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.02] tracking-[-0.02em] text-primary">
                 {siteConfig.shortName}
               </p>
