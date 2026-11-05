@@ -20,7 +20,7 @@ export function InsightsHero() {
               Intelligence hub
             </p>
             <h1 className="font-display text-4xl font-bold tracking-tight text-on-surface md:text-5xl lg:text-[3.75rem] lg:leading-[1.1] lg:tracking-[-0.02em]">
-              Insights &amp; Resources
+              Articles &amp; Resources
             </h1>
             <p className="mt-4 max-w-[65ch] font-sans text-lg leading-relaxed text-on-surface-variant">
               Practical notes on governance, process, and risk for leaders who

@@ -77,7 +77,11 @@ export function SiteFooter() {
         </div>
 
         <p className="text-center font-sans text-xs font-medium tracking-wide text-on-surface-variant">
-          © {year} {siteConfig.name}. All rights reserved.
+          © {year}{" "}
+          <span className="font-brand uppercase tracking-[0.06em] text-primary">
+            {siteConfig.name}
+          </span>
+          . All rights reserved.
         </p>
       </Container>
     </footer>

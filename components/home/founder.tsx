@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/container";
 
-const credentials = ["ACA", "CIA", "ISO 31000"] as const;
+const credentials = ["ACA", "CIA", "M.Sc", "ISO 31000"] as const;
 
 const focusRing =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";

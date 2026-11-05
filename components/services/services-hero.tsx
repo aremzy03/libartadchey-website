@@ -79,7 +79,7 @@ export function ServicesHero() {
                 clarity before risk compounds.
               </p>
               <p className="font-sans text-sm font-semibold uppercase tracking-[0.1em] text-secondary-fixed">
-                ACA · CIA · ISO 31000
+                ACA · CIA · M.Sc · ISO 31000
               </p>
             </div>
           </div>

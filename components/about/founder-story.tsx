@@ -40,6 +40,9 @@ export function FounderStory() {
                 <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-primary-fixed">
                   CIA
                 </span>
+                <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-primary-fixed">
+                  M.Sc
+                </span>
                 <span className="rounded-full bg-secondary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-secondary-fixed">
                   ISO 31000
                 </span>

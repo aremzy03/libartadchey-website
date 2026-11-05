@@ -54,7 +54,7 @@ export function SiteHeader() {
               priority
             />
           </span>
-          <span className="font-display truncate text-lg font-semibold tracking-tight sm:text-xl">
+          <span className="font-brand truncate text-base uppercase tracking-[0.04em] sm:text-lg">
             {siteConfig.name}
           </span>
         </Link>

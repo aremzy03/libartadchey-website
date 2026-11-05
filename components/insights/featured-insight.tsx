@@ -12,7 +12,7 @@ export function FeaturedInsight({ post }: FeaturedInsightProps) {
   return (
     <article className="group overflow-hidden rounded-xl bg-primary text-on-primary shadow-[0_8px_32px_rgba(62,0,100,0.18)] transition-transform duration-500 ease-out motion-safe:hover:-translate-y-1">
       <Link
-        href={`/insights/${post.slug}`}
+        href={`/articles/${post.slug}`}
         className="relative flex min-h-[280px] flex-col justify-end p-6 no-underline md:min-h-[360px] md:p-10"
       >
         <div

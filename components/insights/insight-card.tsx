@@ -27,7 +27,7 @@ export function InsightCard({ post }: InsightCardProps) {
       </div>
       <h3 className="font-display text-xl font-semibold leading-snug text-on-surface md:text-2xl">
         <Link
-          href={`/insights/${post.slug}`}
+          href={`/articles/${post.slug}`}
           className="text-inherit no-underline transition-colors hover:text-primary-container"
         >
           {post.title}
@@ -44,7 +44,7 @@ export function InsightCard({ post }: InsightCardProps) {
         <span>{post.readingMinutes} min</span>
       </div>
       <Link
-        href={`/insights/${post.slug}`}
+        href={`/articles/${post.slug}`}
         className="mt-5 inline-flex items-center gap-2 font-sans text-sm font-semibold tracking-[0.05em] text-primary transition-colors hover:text-secondary"
       >
         Read analysis

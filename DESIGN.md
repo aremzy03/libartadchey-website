@@ -149,7 +149,7 @@ Palette centers on **Deep Royal Purple** (`primary` `#3e0064`, `primary-containe
 
 ## Typography
 
-**Playfair Display** for headlines (editorial boutique authority). **Plus Jakarta Sans** for body, labels, and UI (modern, approachable).
+**Playfair Display** for headlines (editorial boutique authority). **Plus Jakarta Sans** for body, labels, and UI (modern, approachable). **Amatry** (self-hosted, `app/fonts/amatry.otf`, Tailwind `font-brand`) is reserved for the "Libertad Chey" wordmark only (header, footer), matching the lettering in the official logo. Set it uppercase; never use it for headlines or body.
 
 - Large display: tight letter-spacing.
 - Body: line-height 1.6; cap measure ~65–75ch.

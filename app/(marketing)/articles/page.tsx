@@ -6,9 +6,9 @@ import { Container } from "@/components/container";
 import { getFeaturedInsight, getAllInsights } from "@/lib/insights";
 
 export const metadata: Metadata = {
-  title: "Insights",
+  title: "Articles & Resources",
   description:
-    "Insights on process audits, risk strategy, compliance, and SOPs from Libertad Chey.",
+    "Articles and resources on process audits, risk strategy, compliance, and SOPs from Libertad Chey.",
 };
 
 export default async function InsightsPage() {

@@ -37,10 +37,10 @@ export function HomeInsightsInvite() {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
-                href="/insights"
+                href="/articles"
                 className="inline-flex min-h-12 items-center justify-center rounded-lg bg-primary px-6 py-3 font-sans text-sm font-semibold tracking-[0.05em] text-on-primary transition-[filter] duration-300 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
-                Read insights
+                Read articles
               </Link>
               <Link
                 href="/contact"

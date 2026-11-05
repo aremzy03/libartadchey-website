@@ -26,10 +26,10 @@ export function InsightArticle({ post }: InsightArticleProps) {
         <Container>
           <p className="font-sans text-sm font-semibold uppercase tracking-[0.15em] text-on-surface-variant">
             <Link
-              href="/insights"
+              href="/articles"
               className="text-inherit no-underline transition-colors hover:text-primary"
             >
-              Insights
+              Articles
             </Link>
             <span aria-hidden className="mx-2 text-outline">
               /
@@ -90,10 +90,10 @@ export function InsightArticle({ post }: InsightArticleProps) {
             <div className="lg:sticky lg:top-24">
               <NewsletterSignup variant="sidebar" />
               <Link
-                href="/insights"
+                href="/articles"
                 className="mt-6 inline-flex font-sans text-sm font-semibold tracking-[0.05em] text-primary transition-colors hover:text-secondary"
               >
-                ← All insights
+                ← All articles
               </Link>
             </div>
           </div>
