@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/container";
 
-const credentials = ["ACA", "CIA", "M.Sc", "ISO 31000"] as const;
-
 const focusRing =
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
@@ -41,12 +39,17 @@ export function HomeFounder() {
           </div>
 
           <div className="flex flex-col gap-5 lg:col-span-6 lg:col-start-7">
-            <h2
-              id="founder-heading"
-              className="font-display text-[clamp(1.75rem,3.5vw,3rem)] font-bold leading-tight text-on-background"
-            >
-              Uchechukwu Maduka
-            </h2>
+            <div>
+              <h2
+                id="founder-heading"
+                className="font-display text-[clamp(1.75rem,3.5vw,3rem)] font-bold leading-tight text-on-background"
+              >
+                Uchechukwu Maduka
+              </h2>
+              <p className="mt-1 font-sans text-sm font-semibold tracking-wide text-primary sm:text-base">
+                ACA, CIA, M.Sc
+              </p>
+            </div>
             <div
               aria-hidden
               className="h-1 w-16 rounded-full bg-secondary-fixed"
@@ -54,16 +57,6 @@ export function HomeFounder() {
             <p className="font-sans text-xs font-medium uppercase tracking-[0.16em] text-on-surface-variant">
               Founder &amp; Principal Advisor
             </p>
-            <ul className="flex flex-wrap gap-2" aria-label="Credentials">
-              {credentials.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-full bg-primary-fixed px-3.5 py-1.5 font-sans text-sm font-semibold tracking-[0.04em] text-on-primary-fixed"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
             <p className="max-w-[58ch] font-sans text-lg leading-relaxed text-on-surface-variant">
               At Libertad Chey, we do not just point out problems; we architect
               resilience. With a foundation built in Big 4 environments, the

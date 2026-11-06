@@ -30,23 +30,12 @@ export function FounderStory() {
               <h3 className="font-display text-xl font-bold text-primary">
                 Uchechukwu (Uche) Maduka
               </h3>
+              <p className="mt-1 font-sans text-sm font-semibold tracking-wide text-primary">
+                ACA, CIA, M.Sc
+              </p>
               <p className="mt-0.5 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-on-surface-variant">
                 Founder &amp; Principal Advisor
               </p>
-              <div className="mt-2.5 flex flex-wrap justify-center gap-1.5 sm:justify-start">
-                <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-primary-fixed">
-                  ACA
-                </span>
-                <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-primary-fixed">
-                  CIA
-                </span>
-                <span className="rounded-full bg-primary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-primary-fixed">
-                  M.Sc
-                </span>
-                <span className="rounded-full bg-secondary-fixed px-2.5 py-0.5 font-sans text-xs font-semibold text-on-secondary-fixed">
-                  ISO 31000
-                </span>
-              </div>
             </div>
           </div>
 
