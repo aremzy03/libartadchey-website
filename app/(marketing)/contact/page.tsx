@@ -1,17 +1,69 @@
 import type { Metadata } from "next";
-import { CalendlyPanel } from "@/components/contact/calendly-panel";
+import { completeConsultationBookingAction } from "@/app/actions/consultation";
+import { ConsultationScheduler } from "@/components/contact/consultation-scheduler";
 import { DirectContact } from "@/components/contact/direct-contact";
 import { EnquiryForm } from "@/components/contact/enquiry-form";
 import { Container } from "@/components/container";
+import {
+  type ConfirmedBookingSummary,
+  fetchCalcomAvailableSlots,
+  getConsultationConfig,
+} from "@/lib/consultation";
+import { buildDayWindow } from "@/lib/consultation-dates";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Book a consultation or send an enquiry to Libertad Chey. Founder-led risk and audit advisory.",
+    "Book a paid founder consultation or send an enquiry to Libertad Chey. Founder-led risk and audit advisory.",
 };
 
-export default function ContactPage() {
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+type ContactPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function firstParam(
+  value: string | string[] | undefined,
+): string | undefined {
+  if (typeof value === "string") return value.trim() || undefined;
+  if (Array.isArray(value) && typeof value[0] === "string") {
+    return value[0].trim() || undefined;
+  }
+  return undefined;
+}
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const resolvedParams = await searchParams;
+  const initialReference =
+    firstParam(resolvedParams.reference) || firstParam(resolvedParams.trxref);
+  const initialPreviewToken = firstParam(resolvedParams.preview_token);
+
+  const consultationConfig = getConsultationConfig();
+
+  const initialDays = buildDayWindow(1, 10);
+  const firstDay = initialDays[0].dateKey;
+  const lastDay = initialDays[initialDays.length - 1].dateKey;
+
+  const [slotsResult, verificationResult] = await Promise.all([
+    fetchCalcomAvailableSlots({
+      startDate: `${firstDay}T00:00:00.000Z`,
+      endDate: `${lastDay}T23:59:59.999Z`,
+      timeZone: consultationConfig.defaultTimeZone,
+    }),
+    initialReference
+      ? completeConsultationBookingAction(initialReference, initialPreviewToken)
+      : Promise.resolve(null),
+  ]);
+
+  let initialConfirmedSummary: ConfirmedBookingSummary | null = null;
+  let initialVerificationError: string | null = null;
+
+  if (verificationResult) {
+    if (verificationResult.ok) {
+      initialConfirmedSummary = verificationResult.summary;
+    } else {
+      initialVerificationError = verificationResult.error;
+    }
+  }
 
   return (
     <section className="relative overflow-hidden bg-background py-[var(--section-padding)]">
@@ -34,9 +86,9 @@ export default function ContactPage() {
             />
           </h1>
           <p className="mt-5 max-w-2xl font-sans text-lg leading-relaxed text-on-surface-variant">
-            Book a consultation to discuss bespoke risk and audit support for
-            your organisation, or send a short enquiry and we will follow up
-            personally.
+            Select a time for a private founder consultation to examine your
+            risk, control, and audit priorities directly with Uche Maduka, or
+            send a short enquiry and we will follow up personally.
           </p>
         </header>
 
@@ -62,7 +114,19 @@ export default function ContactPage() {
               </span>
               Schedule a consultation
             </h2>
-            <CalendlyPanel calendlyUrl={calendlyUrl} />
+            <ConsultationScheduler
+              formattedFee={consultationConfig.formattedFee}
+              durationMinutes={consultationConfig.durationMinutes}
+              defaultTimeZone={consultationConfig.defaultTimeZone}
+              calcomConfigured={consultationConfig.calcomConfigured}
+              paystackConfigured={consultationConfig.paystackConfigured}
+              initialSlotsByDate={slotsResult.slotsByDate}
+              initialSlotsSource={slotsResult.source}
+              initialSlotsError={slotsResult.error}
+              initialConfirmedSummary={initialConfirmedSummary}
+              initialVerificationError={initialVerificationError}
+              initialReference={initialReference}
+            />
           </div>
 
           <div className="flex flex-col gap-6 lg:col-span-5">

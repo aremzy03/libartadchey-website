@@ -34,7 +34,7 @@ export function FounderStory() {
                 ACA, CIA, M.Sc
               </p>
               <p className="mt-0.5 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-on-surface-variant">
-                Founder &amp; Principal Advisor
+                Founder &amp; Principal Internal Auditor
               </p>
             </div>
           </div>

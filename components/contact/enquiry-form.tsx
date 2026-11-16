@@ -2,10 +2,11 @@
 
 import { useActionState, useEffect, useId, useRef } from "react";
 import {
-  initialIdle,
   submitEnquiry,
   type ContactActionState,
 } from "@/app/actions/contact";
+
+const initialIdle: ContactActionState = { status: "idle" };
 
 const inputClass =
   "w-full rounded-md border border-outline-variant bg-surface-container-low px-4 py-3 font-sans text-base text-on-surface transition-[border-color,box-shadow] placeholder:text-outline focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container-lowest aria-[invalid=true]:border-error aria-[invalid=true]:focus-visible:ring-error/40";

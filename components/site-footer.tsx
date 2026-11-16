@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { NewsletterSignup } from "@/components/insights/newsletter-signup";
 import { mainNav, primaryCta, siteConfig } from "@/lib/site";
 
 export function SiteFooter() {
@@ -9,8 +10,8 @@ export function SiteFooter() {
   return (
     <footer className="bg-surface-container py-[var(--section-padding)] text-on-surface">
       <Container>
-        <div className="mb-8 grid grid-cols-1 gap-8 border-b border-outline-variant pb-8 md:grid-cols-4 md:gap-8">
-          <div className="md:col-span-1">
+        <div className="mb-8 grid grid-cols-1 gap-8 border-b border-outline-variant pb-8 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-4">
             <Link href="/" className="mb-4 inline-block">
               <Image
                 src="/brand/LOGO 111.png"
@@ -20,14 +21,14 @@ export function SiteFooter() {
                 className="h-16 w-auto object-contain"
               />
             </Link>
-            <p className="font-sans text-base leading-relaxed text-on-surface-variant">
+            <p className="max-w-sm font-sans text-base leading-relaxed text-on-surface-variant">
               Risk and audit consultancy. Founder-led expertise for
               organisations that want gaps found before they reach the
               financials.
             </p>
           </div>
 
-          <div>
+          <div className="lg:col-span-2">
             <h2 className="font-display mb-4 text-xl font-semibold">
               Quick links
             </h2>
@@ -50,29 +51,29 @@ export function SiteFooter() {
             </nav>
           </div>
 
-          <div>
+          <div className="lg:col-span-3">
             <h2 className="font-display mb-4 text-xl font-semibold">Contact</h2>
             <div className="flex flex-col gap-2 font-sans text-base text-on-surface-variant">
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="hover:text-primary transition-colors"
+                className="transition-colors hover:text-primary"
               >
                 {siteConfig.email}
               </a>
               <span className="leading-snug">{siteConfig.location}</span>
+              <a
+                href={siteConfig.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 inline-flex w-fit font-sans text-base font-medium text-on-surface-variant transition-colors hover:text-primary"
+              >
+                LinkedIn ↗
+              </a>
             </div>
           </div>
 
-          <div>
-            <h2 className="font-display mb-4 text-xl font-semibold">Connect</h2>
-            <a
-              href={siteConfig.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-sans text-base text-on-surface-variant transition-colors hover:text-primary"
-            >
-              LinkedIn
-            </a>
+          <div className="md:col-span-2 lg:col-span-3">
+            <NewsletterSignup variant="footer" />
           </div>
         </div>
 

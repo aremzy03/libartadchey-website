@@ -1,28 +1,109 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useActionState, useId } from "react";
+import {
+  subscribeNewsletter,
+  type NewsletterActionState,
+} from "@/app/actions/newsletter";
+
+const initialNewsletterState: NewsletterActionState = { status: "idle" };
 
 type NewsletterSignupProps = {
   className?: string;
-  variant?: "sidebar" | "inline";
+  variant?: "sidebar" | "inline" | "footer";
 };
 
-/**
- * Front-end stub only. Wire Resend / Mailchimp (or similar) here:
- * - POST email to your newsletter API route
- * - Or embed provider form / double opt-in flow
- * Do not store addresses in client state beyond UX feedback.
- */
 export function NewsletterSignup({
   className = "",
   variant = "sidebar",
 }: NewsletterSignupProps) {
-  const [status, setStatus] = useState<"idle" | "done">("idle");
+  const formId = useId();
+  const [state, formAction, isPending] = useActionState<
+    NewsletterActionState,
+    FormData
+  >(subscribeNewsletter, initialNewsletterState);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // TODO(CMS/email): replace with Resend / Mailchimp subscribe endpoint.
-    setStatus("done");
+  if (variant === "footer") {
+    return (
+      <div className={className}>
+        <h2 className="font-display mb-2 text-xl font-semibold text-on-surface">
+          The Executive Briefing
+        </h2>
+        <p className="font-sans text-sm leading-relaxed text-on-surface-variant">
+          Occasional notes from Uche on governance, process audits, and catching
+          risk early.
+        </p>
+
+        {state.status === "success" ? (
+          <p
+            className="mt-4 rounded-md border border-outline-variant/60 bg-surface-container-lowest px-3.5 py-2.5 font-sans text-sm font-medium text-primary"
+            role="status"
+            aria-live="polite"
+          >
+            {state.message}
+          </p>
+        ) : (
+          <form
+            action={formAction}
+            className="mt-4 flex flex-col gap-2.5 sm:flex-row"
+            noValidate
+          >
+            {/* Honeypot — visually hidden */}
+            <div
+              className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+              aria-hidden="true"
+            >
+              <label htmlFor={`${formId}-companyWebsite`}>
+                Company website
+              </label>
+              <input
+                id={`${formId}-companyWebsite`}
+                name="companyWebsite"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
+            <div className="flex-1">
+              <label className="sr-only" htmlFor={`${formId}-email`}>
+                Work email
+              </label>
+              <input
+                id={`${formId}-email`}
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                placeholder="Work email"
+                aria-invalid={state.status === "error" ? true : undefined}
+                aria-describedby={
+                  state.status === "error" ? `${formId}-error` : undefined
+                }
+                className="w-full rounded-md border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 font-sans text-sm text-on-surface outline-none transition-[border-color,box-shadow] placeholder:text-outline focus:border-primary focus:shadow-[0_0_0_3px_rgba(184,150,12,0.25)] aria-[invalid=true]:border-error"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isPending}
+              className="inline-flex shrink-0 items-center justify-center rounded-md bg-primary-container px-5 py-2.5 font-sans text-sm font-semibold tracking-[0.05em] text-on-primary transition-[filter,opacity] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {isPending ? "Joining…" : "Subscribe"}
+            </button>
+          </form>
+        )}
+
+        {state.status === "error" && state.message ? (
+          <p
+            id={`${formId}-error`}
+            className="mt-2 font-sans text-xs text-error"
+            role="alert"
+          >
+            {state.message}
+          </p>
+        ) : null}
+      </div>
+    );
   }
 
   const isSidebar = variant === "sidebar";
@@ -61,51 +142,84 @@ export function NewsletterSignup({
           isSidebar ? "text-surface-variant" : "text-on-surface-variant"
         }`}
       >
-        Occasional notes on governance, process, and risk. Sample signup for
-        now; real delivery comes when email is connected.
+        Occasional notes from Uche on governance, process audits, and catching
+        operational risk before it reaches the financials.
       </p>
 
-      {status === "done" ? (
+      {state.status === "success" ? (
         <p
-          className={`relative z-10 mt-6 font-sans text-sm font-semibold ${
+          className={`relative z-10 mt-6 font-sans text-sm font-semibold leading-relaxed ${
             isSidebar ? "text-secondary-fixed" : "text-primary"
           }`}
           role="status"
+          aria-live="polite"
         >
-          Thanks. Your interest is recorded on this page only until the list
-          provider is connected.
+          {state.message}
         </p>
       ) : (
         <form
+          action={formAction}
           className="relative z-10 mt-6 flex flex-col gap-3"
-          onSubmit={onSubmit}
-          noValidate={false}
+          noValidate
         >
-          <label className="sr-only" htmlFor="insights-newsletter-email">
+          {/* Honeypot — visually hidden */}
+          <div
+            className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+            aria-hidden="true"
+          >
+            <label htmlFor={`${formId}-companyWebsite`}>Company website</label>
+            <input
+              id={`${formId}-companyWebsite`}
+              name="companyWebsite"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
+          <label className="sr-only" htmlFor={`${formId}-email`}>
             Work email
           </label>
           <input
-            id="insights-newsletter-email"
+            id={`${formId}-email`}
             name="email"
             type="email"
             required
             autoComplete="email"
             placeholder="Work email"
+            aria-invalid={state.status === "error" ? true : undefined}
+            aria-describedby={
+              state.status === "error" ? `${formId}-error` : undefined
+            }
             className={`w-full rounded-md px-4 py-3 font-sans text-base text-on-surface outline-none ring-0 placeholder:text-outline focus:border-primary focus:shadow-[0_0_0_3px_rgba(184,150,12,0.25)] ${
               isSidebar
                 ? "border border-transparent bg-surface"
                 : "border border-outline-variant bg-surface-container-lowest"
             }`}
           />
+
+          {state.status === "error" && state.message ? (
+            <p
+              id={`${formId}-error`}
+              className={`font-sans text-xs ${
+                isSidebar ? "text-error-container" : "text-error"
+              }`}
+              role="alert"
+            >
+              {state.message}
+            </p>
+          ) : null}
+
           <button
             type="submit"
-            className={`w-full rounded-md px-6 py-3 font-sans text-sm font-semibold tracking-[0.05em] transition-colors ${
+            disabled={isPending}
+            className={`w-full rounded-md px-6 py-3 font-sans text-sm font-semibold tracking-[0.05em] transition-colors disabled:cursor-not-allowed disabled:opacity-70 ${
               isSidebar
                 ? "bg-secondary text-on-secondary-fixed-variant hover:bg-secondary-fixed"
                 : "bg-primary-container text-on-primary hover:brightness-110"
             }`}
           >
-            Subscribe
+            {isPending ? "Subscribing…" : "Subscribe"}
           </button>
         </form>
       )}
@@ -115,7 +229,7 @@ export function NewsletterSignup({
           isSidebar ? "text-surface-variant/70" : "text-on-surface-variant"
         }`}
       >
-        No spam. Unsubscribe anytime once mailing is live.
+        No spam. Unsubscribe anytime.
       </p>
     </div>
   );

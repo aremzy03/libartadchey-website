@@ -1,13 +1,19 @@
 "use server";
 
-import { siteConfig } from "@/lib/site";
+import {
+  buildEnquiryConfirmationEmail,
+  buildEnquiryNotificationEmail,
+  getContactToEmail,
+  sendResendEmail,
+} from "@/lib/email";
+import { persistContactEnquiry } from "@/lib/persistence";
 
 /**
  * Contact enquiry (Resend).
  *
- * Env (contact only):
+ * Env:
  * - RESEND_API_KEY — required to send email; without it the action logs and returns success (dev-friendly)
- * - RESEND_FROM_EMAIL — verified Resend sender (e.g. "Libertad Chey <onboarding@resend.dev>")
+ * - RESEND_FROM_EMAIL — verified Resend sender (e.g. "Libertad Chey <hello@yourdomain.com>")
  * - CONTACT_TO_EMAIL — inbox for enquiries (defaults to siteConfig.email)
  * - NEXT_PUBLIC_CALENDLY_URL — used by the booking UI (not this action)
  */
@@ -21,8 +27,6 @@ export type ContactActionState = {
   message?: string;
   fieldErrors?: ContactFieldErrors;
 };
-
-const initialIdle: ContactActionState = { status: "idle" };
 
 function readString(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -88,17 +92,18 @@ export async function submitEnquiry(
     receivedAt: new Date().toISOString(),
   };
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL ?? siteConfig.email;
-  const from =
-    process.env.RESEND_FROM_EMAIL ??
-    "Libertad Chey <onboarding@resend.dev>";
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const to = getContactToEmail();
 
   if (!apiKey) {
     console.info(
       "[contact] Enquiry received (RESEND_API_KEY not set; not emailed):",
       payload,
     );
+    await persistContactEnquiry({
+      ...payload,
+      emailDeliveryStatus: "SKIPPED_DEV",
+    });
     return {
       status: "success",
       message:
@@ -107,36 +112,58 @@ export async function submitEnquiry(
   }
 
   try {
-    const response = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from,
-        to: [to],
-        reply_to: email,
-        subject: `Website enquiry from ${name} (${organisation})`,
-        text: [
-          `Name: ${name}`,
-          `Email: ${email}`,
-          `Organisation: ${organisation}`,
-          "",
-          message,
-        ].join("\n"),
-      }),
+    const notification = buildEnquiryNotificationEmail(payload);
+    const notificationResult = await sendResendEmail(apiKey, {
+      to,
+      replyTo: email,
+      subject: notification.subject,
+      html: notification.html,
+      text: notification.text,
     });
 
-    if (!response.ok) {
-      const detail = await response.text();
-      console.error("[contact] Resend error:", response.status, detail);
+    if (!notificationResult.ok) {
+      console.error(
+        "[contact] Resend error:",
+        notificationResult.status,
+        notificationResult.detail,
+      );
+      await persistContactEnquiry({
+        ...payload,
+        emailDeliveryStatus: "FAILED",
+        emailErrorDetail: `HTTP ${notificationResult.status}: ${notificationResult.detail}`,
+      });
       return {
         status: "error",
         message:
           "We could not send your message just now. Email us directly or try again in a moment.",
         fieldErrors: { form: "Delivery failed." },
       };
+    }
+
+    await persistContactEnquiry({
+      ...payload,
+      emailDeliveryStatus: "SENT",
+    });
+
+    // Best-effort confirmation email to the person who enquired
+    const confirmation = buildEnquiryConfirmationEmail({
+      name,
+      organisation,
+    });
+    const confirmationResult = await sendResendEmail(apiKey, {
+      to: email,
+      replyTo: to,
+      subject: confirmation.subject,
+      html: confirmation.html,
+      text: confirmation.text,
+    });
+
+    if (!confirmationResult.ok) {
+      console.warn(
+        "[contact] Enquiry notification sent, but auto-confirmation failed:",
+        confirmationResult.status,
+        confirmationResult.detail,
+      );
     }
 
     return {
@@ -154,5 +181,3 @@ export async function submitEnquiry(
     };
   }
 }
-
-export { initialIdle };
